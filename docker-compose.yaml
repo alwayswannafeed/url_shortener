@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_DB=url_shortener
+      - POSTGRES_USER=token
+      - POSTGRES_PASSWORD=token
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  url-shortener:
+    build: .
+    environment:
+      - KV_VIPER_FILE=/config.yaml
+    depends_on:
+      - db
+    restart: on-failure
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - url-shortener
+
+volumes:
+  pgdata:
