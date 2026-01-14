@@ -3,7 +3,7 @@ log:
   disable_sentry: true
 
 db:
-  url: "postgres://token:token@db:5432/url_shortener?sslmode=disable"
+  url: "postgres://token:password@db:5432/url_shortener?sslmode=disable"
 
 listener:
   addr: :8000
@@ -14,3 +14,8 @@ cop:
   upstream: "http://..."
   service_name: serv1_svc
   service_port: 80
+  
+server:
+  bind_addr: ":8000"
+  mount_path: "/"
+  base_url: "http://localhost:8000/"

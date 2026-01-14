@@ -1,9 +1,9 @@
 -- +migrate Up
-create table urls (
-    hash text primary key
-    original_url text not null
-    created_at timestamp default now()
+CREATE TABLE IF NOT EXISTS urls (
+    hash TEXT PRIMARY KEY,
+    original_url TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
 );
 
 -- +migrate Down
-drop table urls
+DROP TABLE IF NOT EXISTS urls;
